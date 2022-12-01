@@ -2,7 +2,7 @@
 
 TESTS=$(go test -v -covermode=count -coverprofile=count.txt ./...)
 echo "$TESTS"
-THRESHOLD=0
+THRESHOLD=10
 
 if echo "$TESTS" | grep -q "FAIL" ; then
   echo ""
