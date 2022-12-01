@@ -22,18 +22,22 @@ func NewCakeUsecase(cakeRepo CakeRepository) *CakeUsecase {
 }
 
 type CakeResponseOutput struct {
-	Data    interface{}
-	Message string
+	Data    interface{} `json:"data"`
+	Message string      `json:"message"`
 }
 
 func (c *CakeUsecase) CakeList(w http.ResponseWriter, r *http.Request) {
 	cakes, err := c.cakeRepo.FindAll()
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		helpers.RespondWithError(r.Context(), w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.RespondWithJSON(w, http.StatusOK, cakes)
+	helpers.RespondWithJSON(w, http.StatusOK, CakeResponseOutput{
+		Data:    cakes,
+		Message: "success",
+	})
 }
 
 func (c *CakeUsecase) CakeDetail(w http.ResponseWriter, r *http.Request) {
@@ -50,7 +54,10 @@ func (c *CakeUsecase) CakeDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	helpers.RespondWithJSON(w, http.StatusOK, cake)
+	helpers.RespondWithJSON(w, http.StatusOK, CakeResponseOutput{
+		Data:    cake,
+		Message: "success",
+	})
 }
 
 func (c *CakeUsecase) AddCake(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +72,10 @@ func (c *CakeUsecase) AddCake(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	helpers.RespondWithJSON(w, http.StatusOK, cake)
+	helpers.RespondWithJSON(w, http.StatusOK, CakeResponseOutput{
+		Data:    cake,
+		Message: "add successfully",
+	})
 }
 
 func (c *CakeUsecase) UpdateCake(w http.ResponseWriter, r *http.Request) {
@@ -87,7 +97,10 @@ func (c *CakeUsecase) UpdateCake(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	helpers.RespondWithJSON(w, http.StatusOK, nil)
+	helpers.RespondWithJSON(w, http.StatusOK, CakeResponseOutput{
+		Data:    cake,
+		Message: "update successfully",
+	})
 }
 
 func (c *CakeUsecase) DeleteCake(w http.ResponseWriter, r *http.Request) {
@@ -103,5 +116,8 @@ func (c *CakeUsecase) DeleteCake(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	helpers.RespondWithJSON(w, http.StatusOK, nil)
+	helpers.RespondWithJSON(w, http.StatusOK, CakeResponseOutput{
+		Data:    id,
+		Message: "delete successfully",
+	})
 }

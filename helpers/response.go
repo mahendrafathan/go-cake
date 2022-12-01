@@ -11,7 +11,6 @@ import (
 type AppError struct {
 	Error   error
 	Message string
-	Code    int
 }
 
 func RespondWithError(ctx context.Context, w http.ResponseWriter, code int, message string) {
