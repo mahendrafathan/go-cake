@@ -2,12 +2,13 @@ package db
 
 import (
 	"database/sql"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func NewMysqlConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "user:user@tcp(full_db_mysql:3306)/mydb?charset=utf8&parseTime=True&loc=Local")
+	db, err := sql.Open("mysql", os.Getenv("DB_CONN"))
 	if err != nil {
 		return db, err
 	}

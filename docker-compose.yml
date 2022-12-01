@@ -13,12 +13,13 @@ services:
         timeout: 5s
         retries: 55
       environment: 
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: mydb
-          MYSQL_USER: user
-          MYSQL_PASSWORD: user
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_USER: ${MYSQL_USER}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       volumes: 
-          - ./init:/docker-entrypoint-initdb.d
+        - ./init:/docker-entrypoint-initdb.d
+        - my-datavolume:/var/lib/mysql
       networks:
         - fullstack
 
@@ -29,6 +30,8 @@ services:
       depends_on:
         db:
           condition: service_healthy
+      environment:
+        - DB_CONN=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(full_db_mysql:3306)/${MYSQL_DATABASE}?charset=utf8&parseTime=True&loc=Local
       ports: 
         - 9090:9090 
       volumes:
@@ -41,7 +44,20 @@ services:
       restart: always
       ports: 
           - 8080:8080
+    
+    swagger-ui:
+      image: swaggerapi/swagger-ui
+      container_name: swagger_ui_container
+      ports:
+          - "8081:8080"
+      volumes:
+          - ./doc:/usr/share/nginx/html/doc
+      environment:
+          API_URL: doc/openapi.yaml
 
 networks:
   fullstack:
     driver: bridge
+
+volumes:
+  my-datavolume:
