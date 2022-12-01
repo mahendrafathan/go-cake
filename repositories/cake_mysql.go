@@ -12,7 +12,7 @@ type cakeRepoMysql struct {
 
 func (c *cakeRepoMysql) FindAll() (results []models.Cake, err error) {
 	results = []models.Cake{}
-	rows, err := c.db.Query("SELECT c.title, c.description, c.rating, c.image FROM cakes c order by c.rating, c.title")
+	rows, err := c.db.Query("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c order by c.rating, c.title")
 	if err != nil {
 		return
 	}
@@ -20,6 +20,7 @@ func (c *cakeRepoMysql) FindAll() (results []models.Cake, err error) {
 	for rows.Next() {
 		cake := models.Cake{}
 		rows.Scan(
+			&cake.Id,
 			&cake.Title,
 			&cake.Description,
 			&cake.Rating,
@@ -31,8 +32,9 @@ func (c *cakeRepoMysql) FindAll() (results []models.Cake, err error) {
 	return results, nil
 }
 func (c *cakeRepoMysql) FindOne(id int) (result models.Cake, err error) {
-	row := c.db.QueryRow("SELECT c.title, c.description, c.rating, c.image FROM cakes c where id = ?", id)
+	row := c.db.QueryRow("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c where id = ?", id)
 	if err = row.Scan(
+		&result.Id,
 		&result.Title,
 		&result.Description,
 		&result.Rating,

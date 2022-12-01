@@ -36,12 +36,13 @@ func (suite *CakeTestSuite) TestFindAll() {
 			preTest: func(ctx context.Context) {
 				suite.
 					sqlMock.
-					ExpectQuery(regexp.QuoteMeta("SELECT c.title, c.description, c.rating, c.image FROM cakes c order by c.rating, c.title")).
-					WillReturnRows(sqlmock.NewRows([]string{"c.title", "c.description", "c.rating", "c.image"}).
-						AddRow("cake", "desc", 7, "image"))
+					ExpectQuery(regexp.QuoteMeta("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c order by c.rating, c.title")).
+					WillReturnRows(sqlmock.NewRows([]string{"c.id", "c.title", "c.description", "c.rating", "c.image"}).
+						AddRow(1, "cake", "desc", 7, "image"))
 			},
 			wantResp: []models.Cake{
 				models.Cake{
+					Id:          1,
 					Title:       "cake",
 					Description: "desc",
 					Rating:      7,
@@ -55,10 +56,10 @@ func (suite *CakeTestSuite) TestFindAll() {
 			preTest: func(ctx context.Context) {
 				suite.
 					sqlMock.
-					ExpectQuery(regexp.QuoteMeta("SELECT c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
+					ExpectQuery(regexp.QuoteMeta("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
 					WithArgs(1).
-					WillReturnRows(sqlmock.NewRows([]string{"c.title", "c.description", "c.rating", "c.image"}).
-						AddRow("cake", "desc", 7, "image"))
+					WillReturnRows(sqlmock.NewRows([]string{"c.id", "c.title", "c.description", "c.rating", "c.image"}).
+						AddRow(1, "cake", "desc", 7, "image"))
 			},
 			wantResp: []models.Cake{},
 			wantErr:  true,
@@ -92,12 +93,13 @@ func (suite *CakeTestSuite) TestFindOne() {
 			preTest: func(ctx context.Context) {
 				suite.
 					sqlMock.
-					ExpectQuery(regexp.QuoteMeta("SELECT c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
+					ExpectQuery(regexp.QuoteMeta("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
 					WithArgs(1).
-					WillReturnRows(sqlmock.NewRows([]string{"c.title", "c.description", "c.rating", "c.image"}).
-						AddRow("cake", "desc", 7, "image"))
+					WillReturnRows(sqlmock.NewRows([]string{"c.id", "c.title", "c.description", "c.rating", "c.image"}).
+						AddRow(1, "cake", "desc", 7, "image"))
 			},
 			wantResp: models.Cake{
+				Id:          1,
 				Title:       "cake",
 				Description: "desc",
 				Rating:      7,
@@ -110,12 +112,13 @@ func (suite *CakeTestSuite) TestFindOne() {
 			preTest: func(ctx context.Context) {
 				suite.
 					sqlMock.
-					ExpectQuery(regexp.QuoteMeta("SELECT c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
+					ExpectQuery(regexp.QuoteMeta("SELECT c.id, c.title, c.description, c.rating, c.image FROM cakes c where id = ?")).
 					WithArgs(1).
-					WillReturnRows(sqlmock.NewRows([]string{"c.title", "c.description", "c.rating", "c.image"}).
-						AddRow("cake", "desc", 7, "image"))
+					WillReturnRows(sqlmock.NewRows([]string{"c.id", "c.title", "c.description", "c.rating", "c.image"}).
+						AddRow(1, "cake", "desc", 7, "image"))
 			},
 			wantResp: models.Cake{
+				Id:          1,
 				Title:       "cake",
 				Description: "desc",
 				Rating:      7,
