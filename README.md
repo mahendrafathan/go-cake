@@ -1,6 +1,6 @@
 # go-cake
-Privy Take Home Test
-This project `go-cake` is for simple transfer system
+Privy Take Home Test.
+This project `go-cake` is api for cake
 ## Owner Info
 Mahendra Fakhrul Fathan (mahendrafathan@gmail.com)
 
