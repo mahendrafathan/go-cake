@@ -1,0 +1,47 @@
+version: '3.6'
+
+services: 
+    db:
+      image: mysql
+      container_name: full_db_mysql
+      command: --default-authentication-plugin=mysql_native_password
+      restart: always
+      healthcheck:
+        test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+        start_period: 5s
+        interval: 5s
+        timeout: 5s
+        retries: 55
+      environment: 
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: mydb
+          MYSQL_USER: user
+          MYSQL_PASSWORD: user
+      volumes: 
+          - ./init:/docker-entrypoint-initdb.d
+      networks:
+        - fullstack
+
+    app:
+      container_name: full_app
+      build: .
+      restart: on-failure
+      depends_on:
+        db:
+          condition: service_healthy
+      ports: 
+        - 9090:9090 
+      volumes:
+        - .:/go/src/go-cake
+      networks:
+        - fullstack
+
+    adminer:
+      image: adminer
+      restart: always
+      ports: 
+          - 8080:8080
+
+networks:
+  fullstack:
+    driver: bridge
