@@ -41,8 +41,8 @@ Please change on `.env` file
 ├── controllers
 │   ├── cake.go
 │   └── interfaces.go
-├── db
-│   └── init.sql
+├── doc
+│   └── openapi.yaml
 ├── docker-compose.yml
 ├── go.mod
 ├── go.sum
@@ -51,6 +51,7 @@ Please change on `.env` file
 ├── init
 │   └── init.sql
 ├── main.go
+├── makefile
 ├── models
 │   └── cake.go
 ├── repositories
