@@ -18,8 +18,8 @@ Please install [Docker](docker.com/get-started) then install [Docker Compose](ht
 ### Docker Compose Explanation
 1. Docker will build and set Mysql DB Based on `.env` file
 2. Docker will build and run golang application
--* Download all application dependencies
--* Run unit test from `unitTest.sh`, if unit test failed or coverage below 10%, application will not running
+  ⋅⋅* Download all application dependencies
+  ⋅⋅* Run unit test from `unitTest.sh`, if unit test failed or coverage below 10%, application will not running
 
 ### Run Unit Test Separately
 If you want to see how unit test works and coverage please run `chmod +x ./unitTest.sh && ./unitTest.sh`
