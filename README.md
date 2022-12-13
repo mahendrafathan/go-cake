@@ -9,7 +9,7 @@ Please install [Docker](docker.com/get-started) then install [Docker Compose](ht
 
 ## Getting Started
 ### How To Run
-1. Unzip into folder
+1. Clone the repo
 2. Change directory to the folder `cd /go-cake`
 3. Run the app using docker compose: `docker-compose up --build -d`, this might takes 2 - 3 mins, so please wait
 5. You're good to go! The app will serve on port `9090`, please kindly check api curl documentation at the end of this page
